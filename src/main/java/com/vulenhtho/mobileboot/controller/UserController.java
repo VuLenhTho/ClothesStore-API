@@ -1,14 +1,14 @@
 package com.vulenhtho.mobileboot.controller;
 
+import com.vulenhtho.mobileboot.model.request.UserFilterRequest;
 import com.vulenhtho.mobileboot.model.request.UserRequest;
-import com.vulenhtho.mobileboot.model.respone.RegisterResponse;
-import com.vulenhtho.mobileboot.model.respone.RoleResponse;
-import com.vulenhtho.mobileboot.model.respone.UserResponse;
+import com.vulenhtho.mobileboot.model.respone.*;
 import com.vulenhtho.mobileboot.service.RoleService;
 import com.vulenhtho.mobileboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,6 +32,21 @@ public class UserController extends BaseController{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/users")
+    public ResponseEntity<UserFilterResponse> getUsers(@RequestParam Integer page
+            ,@RequestParam Integer size, @RequestParam @Nullable String search
+            ,@RequestParam @Nullable Boolean status,@RequestParam @Nullable String sort
+            ,@RequestParam @Nullable Boolean sex){
+        UserFilterRequest userFilterRequest = new UserFilterRequest();
+        userFilterRequest.setStatus(status);
+        userFilterRequest.setSearch(search);
+        userFilterRequest.setSort(sort);
+        userFilterRequest.setSex(sex);
+        userFilterRequest.setPage(page);
+        userFilterRequest.setSize(size);
+        return ResponseEntity.ok(userService.findAllWithFilter(userFilterRequest));
+    }
+
     @PutMapping("/user/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id,
                 @Valid @RequestBody UserRequest userRequest){
@@ -46,16 +61,24 @@ public class UserController extends BaseController{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("/user")
+    public ResponseEntity<Void> delete(@RequestBody UserIdResponse ids){
+        userService.delete(ids);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("/user")
     public ResponseEntity<RegisterResponse> getUserByUserName(@RequestParam String userName){
         return ResponseEntity.ok(userService.findUserByUserName(userName));
     }
 
 
-    @GetMapping("/users")
+    @GetMapping("/users-all")
     public ResponseEntity<List<UserResponse>> getUsers(){
         return ResponseEntity.ok(userService.findAll());
     }
+
+
 
     @GetMapping("/user/{id}")
     public ResponseEntity<UserResponse> getUser(@PathVariable Long id){
@@ -66,5 +89,6 @@ public class UserController extends BaseController{
     public ResponseEntity<List<RoleResponse>> getRoles(){
         return ResponseEntity.ok(roleService.findAll());
     }
+
 
 }

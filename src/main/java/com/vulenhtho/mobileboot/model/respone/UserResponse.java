@@ -17,6 +17,7 @@ public class UserResponse {
     private Date createdDate;
     private String phone;
     private String email;
+    private boolean status;
     private boolean sex;
     private Set<RoleResponse> roles = new HashSet<>();
 

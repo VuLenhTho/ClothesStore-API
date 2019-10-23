@@ -4,15 +4,17 @@ import com.vulenhtho.mobileboot.entity.Role;
 import com.vulenhtho.mobileboot.entity.User;
 import com.vulenhtho.mobileboot.mapper.RoleMapper;
 import com.vulenhtho.mobileboot.mapper.UserMapper;
+import com.vulenhtho.mobileboot.model.request.UserFilterRequest;
 import com.vulenhtho.mobileboot.model.request.UserRequest;
-import com.vulenhtho.mobileboot.model.respone.RegisterResponse;
-import com.vulenhtho.mobileboot.model.respone.RoleResponse;
-import com.vulenhtho.mobileboot.model.respone.UserResponse;
+import com.vulenhtho.mobileboot.model.respone.*;
 import com.vulenhtho.mobileboot.repository.RoleRepository;
 import com.vulenhtho.mobileboot.repository.UserRepository;
 import com.vulenhtho.mobileboot.service.UserService;
+import com.vulenhtho.mobileboot.specification.UserSpecification;
 import com.vulenhtho.mobileboot.util.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +51,6 @@ public class UserServiceImpl implements UserService {
         }
         Date date = new Date();
         user.setCreatedDate(new Timestamp(date.getTime()));
-        user.setStatus(true);
         user.setPassword(encoder.encode(user.getPassword()));
 
         userRepository.save(user);
@@ -81,6 +82,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void delete(UserIdResponse ids) {
+        for (Long id : ids.getIds()) {
+            User user = userRepository.getOne(id);
+
+            for (Role role : user.getRoles()) {
+                role.getUsers().remove(user);
+            }
+            userRepository.delete(user);
+        }
+    }
+
+    @Override
     public RegisterResponse findUserByUserName(String userName) {
         User user = userRepository.findUserByUserName(userName);
         return userMapper.transferToRegister(user);
@@ -99,6 +112,42 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserFilterResponse findAllWithFilter (UserFilterRequest filterRequest) {
+        UserFilterResponse userFilterResponse = new UserFilterResponse();
+
+        List<User> users = userRepository.findAll(UserSpecification.filterUser(filterRequest)
+                ,PageRequest.of(
+                        filterRequest.getPage()
+                        ,filterRequest.getSize()
+                        ,sort(filterRequest.getSort()))).getContent();
+
+        List<User> allUser = userRepository.findAll(UserSpecification.filterUser(filterRequest));
+
+        List<UserResponse> userResponses = users.stream()
+                .map(userMapper::transferToUserResponse)
+                .collect(Collectors.toList());
+
+        int total = (int) Math.ceil((double)allUser.size() / filterRequest.getSize());
+
+        userFilterResponse.setCurrentPage(filterRequest.getPage());
+        userFilterResponse.setTotalPages(total);
+        userFilterResponse.setUsers(userResponses);
+        return userFilterResponse;
+    }
+
+    private Sort sort(String typeDateSort){
+        if (typeDateSort != null){
+            if (typeDateSort.equals("date-des")){
+                return Sort.by("createdDate").descending();
+            }else if (typeDateSort.equals("date-asc")){
+                return Sort.by("createdDate").ascending();
+            }
+        }
+
+        return Sort.by("createdDate").descending();
+    }
+
+    @Override
     public UserResponse findUserById(Long id) {
         User user = userRepository.getOne(id);
         UserResponse userResponse = new UserResponse();
@@ -108,5 +157,9 @@ public class UserServiceImpl implements UserService {
         userResponse.setRoles(roleResponses);
         BeanUtils.refine(user,userResponse,BeanUtils::copyNonNull);
         return userResponse;
+    }
+
+    private boolean isNull(Objects objects){
+        return objects == null;
     }
 }

@@ -14,6 +14,7 @@ public class UserRequest {
     private String email;
     private String phone;
     private boolean sex;
+    private boolean status;
     private Long[] ids;
 
 }
