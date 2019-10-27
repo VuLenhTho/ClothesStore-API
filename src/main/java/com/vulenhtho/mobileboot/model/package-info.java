@@ -1,1 +1,0 @@
-package com.vulenhtho.mobileboot.model;
