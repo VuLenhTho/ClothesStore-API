@@ -13,20 +13,19 @@ import java.util.Set;
 @Entity
 @Table(name = "product")
 public class Product extends Base{
-    @Column(nullable = false)
+    @Column(unique = true ,nullable = false)
     private String name;
-    @Column()
-    private String description;
     @Column
     private Long importPrice;
     @Column
     private Long price;
+
     @Column
-    private Long amount;
+    private String shortDescription;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subCategory_id")
-    private SubCategory subCategory;
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @Column()
     private String status;
@@ -46,6 +45,8 @@ public class Product extends Base{
     private Timestamp modifiedDate;
     @Column
     private Long hot;
+    @Column
+    private boolean trend;
 
     @OneToMany(mappedBy = "product")
     private Set<ProductColor> productColors = new HashSet<>();
@@ -55,6 +56,9 @@ public class Product extends Base{
 
     @OneToMany(mappedBy = "product")
     private Set<ProductDiscount> productDiscounts = new HashSet<>();
+
+    @OneToMany(mappedBy = "product")
+    private Set<ProductColorSize> productColorSizes = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "product_color",

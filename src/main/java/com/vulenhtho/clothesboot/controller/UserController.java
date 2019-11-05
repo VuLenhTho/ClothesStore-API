@@ -1,6 +1,7 @@
 package com.vulenhtho.clothesboot.controller;
 
 import com.vulenhtho.clothesboot.model.request.UserFilterRequest;
+import com.vulenhtho.clothesboot.model.request.IdsRequest;
 import com.vulenhtho.clothesboot.model.request.UserRequest;
 import com.vulenhtho.clothesboot.model.respone.*;
 import com.vulenhtho.clothesboot.service.RoleService;
@@ -57,7 +58,7 @@ public class UserController extends BaseController{
     }
 
     @DeleteMapping("/user")
-    public ResponseEntity<Void> delete(@RequestBody UserIdResponse ids){
+    public ResponseEntity<Void> delete(@RequestBody IdsRequest ids){
         userService.delete(ids);
         return new ResponseEntity<>(HttpStatus.OK);
     }

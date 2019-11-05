@@ -19,6 +19,10 @@ public class Size extends Base{
     @OneToMany(mappedBy = "size")
     private Set<ProductSize> productSizes = new HashSet<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "size")
+    private Set<ProductColorSize> productColorSizes = new HashSet<>();
+
     @ManyToMany(mappedBy = "sizes")
     @JsonIgnore
     private Set<Product> products = new HashSet<>();

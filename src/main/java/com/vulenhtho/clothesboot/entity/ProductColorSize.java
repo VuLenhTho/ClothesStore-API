@@ -7,11 +7,11 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Table(name = "product_color_size")
 @Entity
-@Table(name = "Product_Color")
 @Getter@Setter
-@IdClass(ProductColor.class)
-public class ProductColor implements Serializable {
+@IdClass(ProductColorSize.class)
+public class ProductColorSize implements Serializable {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -21,5 +21,13 @@ public class ProductColor implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "color_id")
     private Color color;
+
+    @Id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "size_id")
+    private Size size;
+
+    @Column
+    private Long amount;
 
 }

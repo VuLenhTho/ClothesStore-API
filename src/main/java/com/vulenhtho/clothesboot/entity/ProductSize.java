@@ -1,5 +1,6 @@
 package com.vulenhtho.clothesboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,4 @@ public class ProductSize implements Serializable {
     @JoinColumn(name = "size_id")
     private Size size;
 
-    @Column
-    private Long amount;
 }

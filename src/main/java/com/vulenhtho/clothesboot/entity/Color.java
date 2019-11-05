@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +20,10 @@ public class Color extends Base {
     @JsonIgnore
     @OneToMany(mappedBy = "color")
     private Set<ProductColor> productColors = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "color")
+    private Set<ProductColorSize> productColorSizes = new HashSet<>();
 
     @ManyToMany(mappedBy = "colors")
     @JsonIgnore
