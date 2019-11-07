@@ -36,8 +36,8 @@ public class ProductController {
         return ResponseEntity.ok(productService.findAllWithFilter(productAdminRequest));
     }
 
-    @GetMapping("/product")
-    public ResponseEntity<ProductWebResponse> getProduct(@RequestParam Long id) {
+    @GetMapping("/web/product/{id}")
+    public ResponseEntity<ProductWebResponse> getProduct(@PathVariable Long id) {
 
         return ResponseEntity.ok(productService.findByIdWeb(id));
     }
