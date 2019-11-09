@@ -3,6 +3,8 @@ package com.vulenhtho.clothesboot.controller;
 import com.vulenhtho.clothesboot.model.request.IdsRequest;
 import com.vulenhtho.clothesboot.model.request.ProductAdminRequest;
 import com.vulenhtho.clothesboot.model.request.ProductRequest;
+import com.vulenhtho.clothesboot.model.request.ProductWebFilterRequest;
+import com.vulenhtho.clothesboot.model.respone.BriefProductFilterResponse;
 import com.vulenhtho.clothesboot.model.respone.ProductFilterResponse;
 import com.vulenhtho.clothesboot.model.respone.ProductResponse;
 import com.vulenhtho.clothesboot.model.respone.ProductWebResponse;
@@ -40,6 +42,18 @@ public class ProductController {
     public ResponseEntity<ProductWebResponse> getProduct(@PathVariable Long id) {
 
         return ResponseEntity.ok(productService.findByIdWeb(id));
+    }
+
+    @GetMapping("/web/products")
+    public ResponseEntity<BriefProductFilterResponse> getBriefProduct(
+            @RequestParam Integer page,@RequestParam Integer size
+            ,@RequestParam(required = false) String sort,@RequestParam(required = false) String search
+            ,@RequestParam(required = false) Long categoryId
+            ,@RequestParam(required = false) Boolean trend
+            ,@RequestParam(required = false) String sex) {
+
+        ProductWebFilterRequest request = new ProductWebFilterRequest(categoryId,trend,sex,search,sort,page,size);
+        return ResponseEntity.ok(productService.findBriefProducts(request));
     }
 
     @PostMapping("/product")

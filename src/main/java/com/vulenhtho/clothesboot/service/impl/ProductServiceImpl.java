@@ -5,18 +5,19 @@ import com.vulenhtho.clothesboot.mapper.ProductMapper;
 import com.vulenhtho.clothesboot.model.request.IdsRequest;
 import com.vulenhtho.clothesboot.model.request.ProductAdminRequest;
 import com.vulenhtho.clothesboot.model.request.ProductRequest;
-import com.vulenhtho.clothesboot.model.respone.ProductFilterResponse;
-import com.vulenhtho.clothesboot.model.respone.ProductResponse;
-import com.vulenhtho.clothesboot.model.respone.ProductWebResponse;
+import com.vulenhtho.clothesboot.model.request.ProductWebFilterRequest;
+import com.vulenhtho.clothesboot.model.respone.*;
 import com.vulenhtho.clothesboot.repository.ProductRepository;
 import com.vulenhtho.clothesboot.service.ProductService;
 import com.vulenhtho.clothesboot.specification.ProductSpecification;
+import com.vulenhtho.clothesboot.specification.ProductWebSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -120,4 +121,23 @@ public class ProductServiceImpl implements ProductService {
     public ProductWebResponse findByIdWeb(Long id) {
         return productMapper.transferToProductWebResponse(productRepository.getOne(id));
     }
+
+    @Override
+    public BriefProductFilterResponse findBriefProducts(ProductWebFilterRequest filterRequest) {
+        BriefProductFilterResponse response = new BriefProductFilterResponse();
+
+        List<Product> productList = productRepository.findAll(ProductWebSpecification.filterProduct(filterRequest)
+                ,PageRequest.of(
+                        filterRequest.getPage()
+                        , filterRequest.getSize()
+                        , sort(filterRequest.getSort()))).getContent();
+        Long countAllProduct = productRepository.count(ProductWebSpecification.filterProduct(filterRequest));
+        int total = (int) Math.ceil((double) countAllProduct / filterRequest.getSize());
+        response.setCurrentPage(filterRequest.getPage());
+        response.setTotalPages(total);
+        response.setProducts(productMapper.transferToBriefProductsWebResponse(productList));
+        return response;
+    }
+
+
 }

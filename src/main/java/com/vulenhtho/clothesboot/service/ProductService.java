@@ -2,6 +2,7 @@ package com.vulenhtho.clothesboot.service;
 
 import com.vulenhtho.clothesboot.model.request.ProductAdminRequest;
 import com.vulenhtho.clothesboot.model.request.ProductRequest;
+import com.vulenhtho.clothesboot.model.request.ProductWebFilterRequest;
 import com.vulenhtho.clothesboot.model.respone.*;
 import com.vulenhtho.clothesboot.model.request.IdsRequest;
 
@@ -23,4 +24,6 @@ public interface ProductService {
     ProductResponse findById(Long id);
 
     ProductWebResponse findByIdWeb(Long id);
+
+    BriefProductFilterResponse findBriefProducts(ProductWebFilterRequest filterRequest);
 }
