@@ -36,7 +36,7 @@ public class ProductWebSpecification {
             return null;
 
         return (root, criteriaQuery, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get("name"), search);
+                -> criteriaBuilder.like(root.get("name"),"%"+ search+"%");
     }
 
     public static Specification<Product> withSex(String sex) {
