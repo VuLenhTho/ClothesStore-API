@@ -17,9 +17,9 @@ public class Color extends Base {
     @Column
     private String name;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "color")
-    private Set<ProductColor> productColors = new HashSet<>();
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "color")
+//    private Set<ProductColor> productColors = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "color")

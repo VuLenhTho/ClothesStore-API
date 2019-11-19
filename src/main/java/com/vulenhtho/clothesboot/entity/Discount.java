@@ -27,10 +27,6 @@ public class Discount extends Base {
     @Column
     private Date endDate;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "discount")
-    private Set<ProductDiscount> productDiscounts = new HashSet<>();
-
     @ManyToMany(mappedBy = "discounts")
     @JsonIgnore
     private Set<Product> products = new HashSet<>();

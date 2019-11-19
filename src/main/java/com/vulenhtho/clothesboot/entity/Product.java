@@ -1,5 +1,6 @@
 package com.vulenhtho.clothesboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,16 +50,12 @@ public class Product extends Base{
     private boolean trend;
 
     @OneToMany(mappedBy = "product")
-    private Set<ProductColor> productColors = new HashSet<>();
-
-    @OneToMany(mappedBy = "product")
-    private Set<ProductSize> productSizes = new HashSet<>();
-
-    @OneToMany(mappedBy = "product")
-    private Set<ProductDiscount> productDiscounts = new HashSet<>();
-
-    @OneToMany(mappedBy = "product")
     private Set<ProductColorSize> productColorSizes = new HashSet<>();
+
+    @OneToMany(mappedBy = "product")
+    private Set<Item> items = new HashSet<>();
+
+
 
     @ManyToMany
     @JoinTable(name = "product_color",
