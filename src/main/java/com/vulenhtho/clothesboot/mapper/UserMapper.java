@@ -28,10 +28,10 @@ public class UserMapper {
         this.roleRepository = roleRepository;
     }
 
-    public User transferToUser(UserRequest userRequest, User user){
-        BeanUtils.refine(userRequest,user, BeanUtils::copyNonNull);
+    public User transferToUser(UserRequest userRequest, User user) {
+        BeanUtils.refine(userRequest, user, BeanUtils::copyNonNull);
 
-        if (userRequest.getIds() != null){
+        if (userRequest.getIds() != null) {
             user.setRoles(new HashSet<>());
             for (Long id : userRequest.getIds()) {
                 Role role = roleRepository.getOne(id);
@@ -42,14 +42,14 @@ public class UserMapper {
         return user;
     }
 
-    public UserResponse transferToUserResponse(User user){
+    public UserResponse transferToUserResponse(User user) {
         UserResponse userResponse = new UserResponse();
 
-        BeanUtils.refine(user, userResponse,BeanUtils::copyNonNull);
+        BeanUtils.refine(user, userResponse, BeanUtils::copyNonNull);
         return userResponse;
     }
 
-    public List<UserResponse> toUsersResponse(List<User> users){
+    public List<UserResponse> toUsersResponse(List<User> users) {
         List<UserResponse> userResponses = new ArrayList<>();
         for (User user : users) {
             userResponses.add(transferToUserResponse(user));
@@ -57,13 +57,13 @@ public class UserMapper {
         return userResponses;
     }
 
-    public RegisterResponse transferToRegister(User user){
-        RegisterResponse registerResponse =new RegisterResponse();
+    public RegisterResponse transferToRegister(User user) {
+        RegisterResponse registerResponse = new RegisterResponse();
 
         Set<RoleResponse> roleResponses = user.getRoles().stream()
                 .map(roleMapper::transferToRoleResponse)
                 .collect(Collectors.toSet());
-        BeanUtils.refine(user, registerResponse,BeanUtils::copyNonNull);
+        BeanUtils.refine(user, registerResponse, BeanUtils::copyNonNull);
         registerResponse.setRoles(roleResponses);
         return registerResponse;
     }

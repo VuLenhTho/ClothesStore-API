@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 @Component
-public class NotBlankImpl implements ConstraintValidator<NOTBLANK,String > {
+public class NotBlankImpl implements ConstraintValidator<NOTBLANK, String> {
     @Override
     public void initialize(NOTBLANK constraintAnnotation) {
 

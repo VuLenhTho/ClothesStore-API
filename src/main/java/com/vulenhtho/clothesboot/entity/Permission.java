@@ -8,7 +8,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "permission")
-@Getter@Setter
+@Getter
+@Setter
 public class Permission implements Serializable {
     @Id
     @ManyToOne

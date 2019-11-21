@@ -6,7 +6,10 @@ import com.vulenhtho.clothesboot.model.request.IdsRequest;
 import com.vulenhtho.clothesboot.model.request.ProductAdminRequest;
 import com.vulenhtho.clothesboot.model.request.ProductRequest;
 import com.vulenhtho.clothesboot.model.request.ProductWebFilterRequest;
-import com.vulenhtho.clothesboot.model.respone.*;
+import com.vulenhtho.clothesboot.model.respone.BriefProductFilterResponse;
+import com.vulenhtho.clothesboot.model.respone.ProductFilterResponse;
+import com.vulenhtho.clothesboot.model.respone.ProductResponse;
+import com.vulenhtho.clothesboot.model.respone.ProductWebResponse;
 import com.vulenhtho.clothesboot.repository.ProductRepository;
 import com.vulenhtho.clothesboot.service.ProductService;
 import com.vulenhtho.clothesboot.specification.ProductSpecification;
@@ -17,7 +20,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -92,7 +94,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Sort sort(String typeSort) {
-        if (typeSort!= null){
+        if (typeSort != null) {
             switch (typeSort) {
                 case "hot-des":
                     return Sort.by("hot").descending();
@@ -127,7 +129,7 @@ public class ProductServiceImpl implements ProductService {
         BriefProductFilterResponse response = new BriefProductFilterResponse();
 
         List<Product> productList = productRepository.findAll(ProductWebSpecification.filterProduct(filterRequest)
-                ,PageRequest.of(
+                , PageRequest.of(
                         filterRequest.getPage()
                         , filterRequest.getSize()
                         , sort(filterRequest.getSort()))).getContent();

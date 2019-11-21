@@ -26,7 +26,7 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<ProductFilterResponse> getProducts(@RequestParam(required = false,defaultValue = "0") Integer page
+    public ResponseEntity<ProductFilterResponse> getProducts(@RequestParam(required = false, defaultValue = "0") Integer page
             , @RequestParam(required = false, defaultValue = "5") Integer size
             , @RequestParam(required = false) String search
             , @RequestParam(required = false) String status, @RequestParam(required = false) String sort
@@ -34,7 +34,7 @@ public class ProductController {
             , @RequestParam(required = false) Boolean trend, @RequestParam(required = false) Long discount) {
 
         ProductAdminRequest productAdminRequest = new ProductAdminRequest
-                (sort, status, sex, search,subCategory, trend, discount, page, size);
+                (sort, status, sex, search, subCategory, trend, discount, page, size);
         return ResponseEntity.ok(productService.findAllWithFilter(productAdminRequest));
     }
 
@@ -46,13 +46,13 @@ public class ProductController {
 
     @GetMapping("/web/products")
     public ResponseEntity<BriefProductFilterResponse> getBriefProduct(
-            @RequestParam Integer page,@RequestParam Integer size
-            ,@RequestParam(required = false) String sort,@RequestParam(required = false) String search
-            ,@RequestParam(required = false) Long categoryId
-            ,@RequestParam(required = false) Boolean trend
-            ,@RequestParam(required = false) String sex) {
+            @RequestParam Integer page, @RequestParam Integer size
+            , @RequestParam(required = false) String sort, @RequestParam(required = false) String search
+            , @RequestParam(required = false) Long categoryId
+            , @RequestParam(required = false) Boolean trend
+            , @RequestParam(required = false) String sex) {
 
-        ProductWebFilterRequest request = new ProductWebFilterRequest(categoryId,trend,sex,search,sort,page,size);
+        ProductWebFilterRequest request = new ProductWebFilterRequest(categoryId, trend, sex, search, sort, page, size);
         return ResponseEntity.ok(productService.findBriefProducts(request));
     }
 

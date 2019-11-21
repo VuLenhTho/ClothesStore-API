@@ -10,8 +10,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "size")
-@Getter@Setter
-public class Size extends Base{
+@Getter
+@Setter
+public class Size extends Base {
     @Column(nullable = false)
     private String name;
 

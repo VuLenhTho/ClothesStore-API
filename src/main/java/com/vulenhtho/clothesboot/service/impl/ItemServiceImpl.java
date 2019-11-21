@@ -31,8 +31,8 @@ public class ItemServiceImpl implements ItemService {
         for (ItemRequest itemRequest : cartRequest.getItems()) {
             Optional<Product> product = productRepository
                     .findById(itemRequest.getProductId());
-            Item item = new Item(cart,product.get()
-                    ,itemRequest.getPrice(),itemRequest.getAmount());
+            Item item = new Item(cart, product.get()
+                    , itemRequest.getPrice(), itemRequest.getAmount());
 
             itemRepository.save(item);
         }
@@ -44,6 +44,6 @@ public class ItemServiceImpl implements ItemService {
         for (Item i : items) {
             itemRepository.delete(i);
         }
-        insert(cartRequest,cart);
+        insert(cartRequest, cart);
     }
 }

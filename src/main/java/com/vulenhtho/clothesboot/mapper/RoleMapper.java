@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RoleMapper {
-    public RoleResponse transferToRoleResponse(Role role){
+    public RoleResponse transferToRoleResponse(Role role) {
         RoleResponse roleResponse = new RoleResponse();
-        BeanUtils.refine(role,roleResponse,BeanUtils::copyNonNull);
+        BeanUtils.refine(role, roleResponse, BeanUtils::copyNonNull);
         return roleResponse;
     }
 }

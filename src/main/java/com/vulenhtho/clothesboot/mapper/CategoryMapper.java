@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CategoryMapper {
-    public CategoryResponse transferToCategoryResponse(Category category){
+    public CategoryResponse transferToCategoryResponse(Category category) {
         CategoryResponse categoryResponse = new CategoryResponse();
-        BeanUtils.refine(category, categoryResponse,BeanUtils::copyNonNull);
+        BeanUtils.refine(category, categoryResponse, BeanUtils::copyNonNull);
 
         return categoryResponse;
     }

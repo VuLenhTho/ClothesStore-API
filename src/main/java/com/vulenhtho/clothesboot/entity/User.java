@@ -2,7 +2,6 @@ package com.vulenhtho.clothesboot.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -42,7 +41,7 @@ public class User extends Base {
     private Set<Permission> permissions = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "permission" ,
+    @JoinTable(name = "permission",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();

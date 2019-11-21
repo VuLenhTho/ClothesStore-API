@@ -24,7 +24,7 @@ public class CorsConfig {
                                 HttpMethod.POST.name())
                         .maxAge(31536000)
                         .allowCredentials(false)
-                        .allowedOrigins("*") ;
+                        .allowedOrigins("*");
             }
         };
     }

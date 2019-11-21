@@ -8,10 +8,10 @@ import com.vulenhtho.clothesboot.model.request.ProductRequest;
 import com.vulenhtho.clothesboot.model.respone.BriefProductWebResponse;
 import com.vulenhtho.clothesboot.model.respone.ProductResponse;
 import com.vulenhtho.clothesboot.model.respone.ProductWebResponse;
+import com.vulenhtho.clothesboot.repository.CategoryRepository;
 import com.vulenhtho.clothesboot.repository.ColorRepository;
 import com.vulenhtho.clothesboot.repository.DiscountRepository;
 import com.vulenhtho.clothesboot.repository.SizeRepository;
-import com.vulenhtho.clothesboot.repository.CategoryRepository;
 import com.vulenhtho.clothesboot.util.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,6 +31,7 @@ public class ProductMapper {
     private ColorMapper colorMapper;
     private SizeMapper sizeMapper;
     private DiscountMapper discountMapper;
+
     @Autowired
     public ProductMapper(ColorRepository colorRepository, SizeRepository sizeRepository, DiscountRepository discountRepository, CategoryRepository categoryRepository, CategoryMapper categoryMapper, ProductColorSizeMapper colorSizeMapper, ColorMapper colorMapper, SizeMapper sizeMapper, DiscountMapper discountMapper) {
         this.colorRepository = colorRepository;
@@ -107,14 +108,14 @@ public class ProductMapper {
         return productResponses;
     }
 
-    public BriefProductWebResponse transferToBriefProductWebResponse(Product product){
+    public BriefProductWebResponse transferToBriefProductWebResponse(Product product) {
         BriefProductWebResponse webResponse = new BriefProductWebResponse();
-        BeanUtils.refine(product,webResponse,BeanUtils::copyNonNull);
+        BeanUtils.refine(product, webResponse, BeanUtils::copyNonNull);
         webResponse.setDiscount(discountMapper.transferToDiscountsResponse(product.getDiscounts()));
         return webResponse;
     }
 
-    public List<BriefProductWebResponse> transferToBriefProductsWebResponse(List<Product> products){
+    public List<BriefProductWebResponse> transferToBriefProductsWebResponse(List<Product> products) {
         List<BriefProductWebResponse> webResponses = new ArrayList<>();
         for (Product product : products) {
             webResponses.add(transferToBriefProductWebResponse(product));

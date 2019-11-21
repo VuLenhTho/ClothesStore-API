@@ -10,7 +10,8 @@ import java.io.Serializable;
 
 @Table
 @Entity(name = "item")
-@Getter@Setter
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Item extends Base implements Serializable {

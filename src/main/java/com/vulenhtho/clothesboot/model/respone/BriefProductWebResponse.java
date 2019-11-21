@@ -5,7 +5,8 @@ import lombok.Setter;
 
 import java.util.Set;
 
-@Getter@Setter
+@Getter
+@Setter
 public class BriefProductWebResponse {
     private Long id;
     private String name;

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class RoleServiceImpl  implements RoleService {
+public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
     private RoleMapper roleMapper;
 

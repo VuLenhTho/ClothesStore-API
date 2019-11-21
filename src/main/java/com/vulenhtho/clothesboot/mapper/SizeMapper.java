@@ -10,13 +10,13 @@ import java.util.Set;
 
 @Component
 public class SizeMapper {
-    public SizeResponse transferToSizeResponse(Size size){
+    public SizeResponse transferToSizeResponse(Size size) {
         SizeResponse sizeResponse = new SizeResponse();
-        BeanUtils.refine(size,sizeResponse,BeanUtils::copyNonNull);
+        BeanUtils.refine(size, sizeResponse, BeanUtils::copyNonNull);
         return sizeResponse;
     }
 
-    public Set<SizeResponse> transferToSizesResponse(Set<Size> sizes){
+    public Set<SizeResponse> transferToSizesResponse(Set<Size> sizes) {
         Set<SizeResponse> sizeResponses = new HashSet<>();
         for (Size s : sizes) {
             sizeResponses.add(transferToSizeResponse(s));

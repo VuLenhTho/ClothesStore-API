@@ -12,7 +12,7 @@ public enum ErrorCode {
         this.message = message;
     }
 
-    public static String getMessage(String code){
+    public static String getMessage(String code) {
         return Arrays
                 .stream(values())
                 .filter(errorCode -> errorCode.code.equals(code))
@@ -20,11 +20,12 @@ public enum ErrorCode {
                 .get()
                 .message();
     }
-    public String message(){
+
+    public String message() {
         return message;
     }
 
-    public interface Code{
+    public interface Code {
         String NOT_BLANK = "0012";
     }
 }

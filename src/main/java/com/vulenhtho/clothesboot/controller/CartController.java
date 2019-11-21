@@ -17,14 +17,14 @@ public class CartController {
     }
 
     @PostMapping("/web/cart")
-    public ResponseEntity<Void> insert(@RequestBody CartRequest cartRequest){
+    public ResponseEntity<Void> insert(@RequestBody CartRequest cartRequest) {
         cartService.insert(cartRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/web/cart/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody CartRequest cartRequest){
-        cartService.update(id,cartRequest);
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody CartRequest cartRequest) {
+        cartService.update(id, cartRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

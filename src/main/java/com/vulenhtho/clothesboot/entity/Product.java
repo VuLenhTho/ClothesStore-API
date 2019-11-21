@@ -1,6 +1,5 @@
 package com.vulenhtho.clothesboot.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,8 +12,8 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "product")
-public class Product extends Base{
-    @Column(unique = true ,nullable = false)
+public class Product extends Base {
+    @Column(unique = true, nullable = false)
     private String name;
     @Column
     private Long importPrice;
@@ -54,7 +53,6 @@ public class Product extends Base{
 
     @OneToMany(mappedBy = "product")
     private Set<Item> items = new HashSet<>();
-
 
 
     @ManyToMany

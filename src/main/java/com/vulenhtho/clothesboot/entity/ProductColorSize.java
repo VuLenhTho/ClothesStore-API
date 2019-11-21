@@ -1,6 +1,5 @@
 package com.vulenhtho.clothesboot.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +8,8 @@ import java.io.Serializable;
 
 @Table(name = "product_color_size")
 @Entity
-@Getter@Setter
+@Getter
+@Setter
 @IdClass(ProductColorSize.class)
 public class ProductColorSize implements Serializable {
     @Id
